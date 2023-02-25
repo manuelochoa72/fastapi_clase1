@@ -1,8 +1,15 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 applicacion=FastAPI()
 
+applicacion.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],
+    allow_methods=["*"],  
+    allow_headers=["*"]
+)
 class Persona(BaseModel):
     nombre:str
     edad:int
@@ -35,7 +42,7 @@ def get_nombre_edad():
 
 
 @applicacion.get("/persona/{id}")
-def get_nombre_edad(id: str):
+def get_nombre_edad_id(id: str):
     return fakedata[id]
 
 @applicacion.post("/insert/persona")
